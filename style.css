@@ -1,0 +1,26 @@
+	div.creature {
+		width: 150px;
+		height: 150px;
+
+		border: 1px solid #CCCCCC;
+		margin: 5px;
+
+		display: inline-table;
+	}
+
+	div.creature h1 {
+		font-size: 12px;
+		font-weight: bold;
+		font-family: Verdana;
+	}
+
+	div.controls img {
+		cursor: pointer;
+	}
+
+	div#transmuter {
+		width: 80%;
+		height: 300px;
+		border: 1px solid #aaa;
+		background-color: #ccc;
+	}

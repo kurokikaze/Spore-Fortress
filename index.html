@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="content-language" content="en">
+<meta name="author" content="kurokikaze">
+<meta http-equiv="Reply-to" content="@.com">
+<meta name="generator" content="PhpED 5.2">
+<meta name="description" content="Some Fun Stuff">
+<meta name="keywords" content="spore, dwarf fortress, adapter">
+<meta name="creation-date" content="09/20/2007">
+<meta name="revisit-after" content="15 days">
+
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="blueprint/screen.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="blueprint/print.css" type="text/css" media="print" />
+	<!--[if IE]><link rel="stylesheet" href="blueprint/ie.css" type="text/css" media="screen, projection" /><![endif]-->
+
+	<!-- Import fancy-type plugin. -->
+	<link rel="stylesheet" href="blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" />
+
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen, projection" />
+
+	<script type="text/javascript" src="jquery.js"></script>
+
+	<script type="text/javascript" src="ui/ui.core.js"></script>
+	<script type="text/javascript" src="ui/ui.draggable.js"></script>
+	<script type="text/javascript" src="ui/ui.droppable.js"></script>
+
+	<script type="text/javascript" src="spore.js"></script>
+	<title>Builder</title>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="span-24 last">
+			<h1>Spore Fortress converter</h1>
+		</div>
+		<div class="span-12">
+			<div id="controls">
+				<input type="text" value="User name" id="searchfield" />
+				<img src="img/user.png" title="Find by user" id="find_user" />
+				<img src="img/lens.png" title="Random" id="find_word" />
+				<img src="img/star.png" title="Top rated" id="toprated" />
+				<img src="img/trash.png" title="Clean search area" id="clean" />
+				<img src="img/down_arrow.png" title="Download creatures file" id="download" />
+			</div>
+
+			<div id="selector"></div>
+			<div id="images"></div>
+		</div>
+
+		<div class="span-12 last">
+			<span>Transmutation area</span>
+			<div id="transmuter" class="last">
+				<ul id="readylist"></ul>&nbsp;
+			</div>
+		</div>
+		<div class="span-24 last">
+			<em>Made by kurokikaze in 2009. All Spore stuff copyrighted by Maxis (yes, creatures too), all Dwarf Fortress stuff copyrighted by The Great Toady One (Tarn Adams)</em>
+		</div>
+	</div>
+
+
+</body>
+</html>
