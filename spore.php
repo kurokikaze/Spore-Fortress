@@ -108,12 +108,12 @@
 			$output[] = $df_creature->get_raws();
 
 			unset($df_creature);
-			echo "\n";
 		}
 	}
 
 	header('Content-type: text');
 	header('Content-Disposition: attachment; filename="sporecreatures.txt"');
 
+	echo implode("\n\n", $output);
 
 ?>
