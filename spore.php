@@ -30,11 +30,23 @@
 			$df_creature = new DF_Creature();
 
 			$df_creature->set_name($asset["name"]);
+
 			if (!empty($model['skincolor1'])) {
 				$df_color = DwarfFortress::find_nearest_color($model['skincolor1']);
 				$df_creature->add_property('color', $df_color); // Color of creature
 			} else {
 				$df_creature->add_property('color', '7:0:1'); // default to white
+			}
+
+			// This part needs extensive work
+			if  ($creature['feet'] == 4) {
+				$df_creature->add_body_part('QUADRUPED');
+			} elseif ($creature['feet'] == 2 && $creature['hand'] == 4) {
+				$df_creature->add_body_part('BASIC_3PARTARMS');
+			} elseif ($creature['feet'] == 2) {
+				$df_creature->add_body_part('BASIC_3PARTARMS');
+			} elseif ($creature['feet'] == 8) {
+				$df_creature->add_body_part('SPIDER'); // I know its wrong
 			}
 
 			$df_creature->add_property('modvalue', '3'); // value modifier for skin, bones etc
@@ -60,7 +72,7 @@
 
 			$df_creature->add_property('layering', '100'); // How well protected from cold
 
-			// Attacks
+			// Attacks. There s an error here: only 1 attack can be main, i think
 
 			if ($creature['charge'] > 0) {
 				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:kick:kicks:1:' . IntVal($creature['charge']) . ':BLUDGEON');
@@ -74,9 +86,10 @@
 				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:strike:strikes:1:' . IntVal($creature['strike']) . ':BLUDGEON');
 			}
 
-			if ($creature['spit'] > 0) {
-				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:kick:kicks:1:2:BLUDGEON');
-			}
+			// No luck for spitters right now
+			// if ($creature['spit'] > 0) {
+			// 	$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:kick:kicks:1:2:BLUDGEON');
+			// }
 
 			// Loveablity
 			if ($creature['sing'] > 2) {
@@ -100,7 +113,6 @@
 			}
 
 			// Diet
-
 			if ($creature['carnivore'] > $creature['herbivore']) {
 				$df_creature->add_property('carnivore');
 			}

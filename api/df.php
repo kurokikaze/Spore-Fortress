@@ -72,11 +72,16 @@
 		// Some stats
 		private $stats;
 		private $attacks;
+		private $body = array('2LUNGS', 'HEART', 'GUTS', 'ORGANS', 'SPINE', 'BRAIN', 'MOUTH'); // Starter set
 
 		private $raws;
 
 		public function add_attack($type, $power) {
 			$this->attacks[$type] = $power;
+		}
+
+		public function add_body_part($name, $count = 1) {
+			$this->body[] = $name;
 		}
 
 		public function add_property($property_name, $value = '') {
@@ -133,6 +138,7 @@
 				}
 			}
 
+			$raw_object .= '[BODY:' . implode(':', $this->body) . ']';
 			foreach($this->raws AS $property) {
 
 				foreach ($property AS $token => $value) {

@@ -256,34 +256,37 @@ function getCreatureInfo($creatureid){
 		echo 'Returned asset is inactive' . "<br>\n";
 	}
 
-	$asset = array("cost"=> $assetxml->cost ,
-				 "health"=> $assetxml->health ,
-				 "height"=> $assetxml->height ,
-				 "meanness"=> $assetxml->meanness ,
-				 "cuteness"=> $assetxml->cuteness ,
-				 "sense"=> $assetxml->sense ,
+	$asset = array("cost" => $assetxml->cost ,
+				 "health" => $assetxml->health ,
+				 "height" => $assetxml->height ,
+				 "meanness" => $assetxml->meanness ,
+				 "cuteness" => $assetxml->cuteness ,
+				 "sense" => $assetxml->sense ,
 
-				 "bonecount"=> $assetxml->bonecount ,
-				 "footcount"=> $assetxml->footcount ,
-				 "graspercount"=> $assetxml->graspercount ,
-				 "basegear"=> $assetxml->basegear ,
+				 "bonecount" => $assetxml->bonecount ,
+				 "footcount" => $assetxml->footcount ,
+				 "graspercount" => $assetxml->graspercount ,
+				 "basegear" => $assetxml->basegear ,
 
-				 "carnivore"=> $assetxml->carnivore ,
-				 "herbivore"=> $assetxml->herbivore ,
+				 "carnivore" => $assetxml->carnivore ,
+				 "herbivore" => $assetxml->herbivore ,
 
-				 "glide"=> $assetxml->glide ,
-				 "sprint"=> $assetxml->sprint ,
-				 "stealth"=> $assetxml->stealth ,
+				 "glide" => $assetxml->glide ,
+				 "sprint" => $assetxml->sprint ,
+				 "stealth" => $assetxml->stealth ,
 
-				 "bite"=> $assetxml->bite ,
-				 "charge"=> $assetxml->charge ,
-				 "strike"=> $assetxml->strike ,
-				 "spit"=> $assetxml->spit ,
+				 "bite" => $assetxml->bite ,
+				 "charge" => $assetxml->charge ,
+				 "strike" => $assetxml->strike ,
+				 "spit" => $assetxml->spit ,
 
-				 "sing"=> $assetxml->sing ,
-				 "dance"=> $assetxml->dance ,
-				 "gesture"=> $assetxml->gesture ,
-				 "posture"=> $assetxml->posture  );
+				 "feet" => IntVal($assetxml->footcount),
+				 "hand" => IntVal($assetxml->graspercount),
+
+				 "sing" => $assetxml->sing ,
+				 "dance" => $assetxml->dance ,
+				 "gesture" => $assetxml->gesture ,
+				 "posture" => $assetxml->posture  );
 	return $asset;
 }
 
