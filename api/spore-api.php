@@ -15,12 +15,11 @@ include('utf.php');
 function getRestService($url){
 
 	$file = fopen($url, 'r');
-	if($file === false)
-	{
+	if ($file === false) {
 		echo 'Cannot open asset url';
 		return '0';
 
-	}else{
+	} else {
 		$urldata = stream_get_contents($file);
 		fclose($file);
 
@@ -34,17 +33,16 @@ function getRestService($url){
 			echo 'Bad XML';
 			$result = '0';
 		}
-	return $result;
+		return $result;
 	}
 }
 
-function getStats(){
+function getStats() {
 	$statsservice = 'http://www.spore.com/rest/stats';
 	$statsxml = getRestService($statsservice);
-	if($statsxml == '0')
-	{
+	if ($statsxml == '0') {
 		return $statsxml;
-	}else{
+	} else {
 		$statsinfo=array("totalUploads"=>$statsxml->totalUploads,
 				 "dayUploads" => $statsxml->dayUploads,
 				 "totalUsers" => $statsxml -> totalUsers,
@@ -54,14 +52,13 @@ function getStats(){
 
 }
 
-function getUserIdFromName($user){
+function getUserIdFromName($user) {
 	$userservice = 'http://www.spore.com/rest/user/'.$user;
 	$userxml = getRestService($userservice);
-	if($userxml == '0')
-	{
+	if($userxml == '0') {
 		return $userxml;
-	}else{
-		$userinfo=$userxml->id;
+	} else {
+		$userinfo = $userxml->id;
 		return $userinfo;
 	}
 
@@ -76,16 +73,18 @@ echo $user;
 function getUserInfo($user){
 	$userservice = 'http://www.spore.com/rest/user/'.$user;
 	$userxml = getRestService($userservice);
-	if($userxml == '0')
-	{
+	if($userxml == '0') {
 		return $userxml;
-	}else{
-		$userinfo=array("name"=>$userxml->name ,
-					"id" => $userxml->id ,
-					"image" => $userxml->image,
-					"tagline" => $userxml->tagline,
-					"creation" => $userxml->creation );
-	return $userinfo;
+	} else {
+		$userinfo = array(
+			"name"=>$userxml->name ,
+			"id" => $userxml->id ,
+			"image" => $userxml->image,
+			"tagline" => $userxml->tagline,
+			"creation" => $userxml->creation
+		);
+
+		return $userinfo;
 	}
 }
 
@@ -104,17 +103,21 @@ if($user == '0')
 function getBuddiesPerUser($user, $start, $length){
 	$buddyservice= 'http://www.spore.com/rest/users/buddies/'.$user.'/'.$start.'/'.$length;
 	$buddyxml = getRestService($buddyservice);
-	if($buddyxml == '0')
-	{
+	if($buddyxml == '0') {
 		return $buddyxml;
-	}else{
-	$buddies=array();
-	foreach($buddyxml->buddy as $buddy){
-		$buddyinfo = array("name" => $buddy->name,
-						   "id" => $buddy->id);
-		array_push($buddies, $buddyinfo);
-	}
-	return $buddies;
+	} else {
+
+		$buddies=array();
+
+		foreach ($buddyxml->buddy as $buddy) {
+			$buddyinfo = array(
+				"name" => $buddy->name,
+				"id" => $buddy->id
+			);
+			array_push($buddies, $buddyinfo);
+
+		}
+		return $buddies;
 	}
 }
 
@@ -133,28 +136,30 @@ if($bud == '0')
 	}
 }
 */
-function getAssetsPerUser($user, $start, $length, $type){
+function getAssetsPerUser($user, $start, $length, $type) {
 	$assetservice= 'http://www.spore.com/rest/assets/user/'.$user.'/'.$start.'/'.$length.'/'.$type;
 	$assetxml = getRestService($assetservice);
-	if($assetxml == '0'){
+	if($assetxml == '0') {
 		return $assetxml;
-	}else{
+	} else {
 		$assets = array();
-		foreach($assetxml->asset as $asset)
-		{
+		foreach($assetxml->asset as $asset) {
 			$id = $asset->id;
 			$image = 'http://www.spore.com/static/image/'.substr($id, 0, 3).'/'.substr($id, 3, 3).'/'.substr($id,6,3).'/'.$id.'_lrg.png';
 			$thumb = 'http://www.spore.com/static/thumb/'.substr($id, 0, 3).'/'.substr($id, 3, 3).'/'.substr($id,6,3).'/'.$id.'.png';
 
-			$assetinfo = array(	"name" => $asset->name,
-							"id" => $asset->id,
-							"image" => $image,
-							"thumb" => $thumb,
-							"created" => $asset->created,
-							"rating" => $asset->rating,
-							"type" => $asset->type ,
-							"subtype" => $asset->subtype,
-							"parent" => $asset->parent);
+			$assetinfo = array(
+				"name" => $asset->name,
+				"id" => $asset->id,
+				"image" => $image,
+				"thumb" => $thumb,
+				"created" => $asset->created,
+				"rating" => $asset->rating,
+				"type" => $asset->type ,
+				"subtype" => $asset->subtype,
+				"parent" => $asset->parent
+			);
+
 			array_push($assets, $assetinfo);
 		}
 		return $assets;
@@ -177,15 +182,19 @@ if($ast =='0')
 */
 
 function getAchievementsPerUser($user, $start, $length){
+
 	$achievementservice= 'http://www.spore.com/rest/achievements/'.$user.'/'.$start.'/'.$length;
 	$achievementxml = getRestService($achievementservice);
 	$achievements = array();
-	foreach($achievementxml->achievement as $achievement)
-	{
-		$achievementinfo = array("guid" => $achievement->guid,
-					"date" => $achievement->date);
+
+	foreach($achievementxml->achievement as $achievement) {
+		$achievementinfo = array(
+			"guid" => $achievement->guid,
+			"date" => $achievement->date
+		);
 		array_push($achievements, $achievementinfo);
 	}
+
 	return $achievements;
 }
 
@@ -203,18 +212,20 @@ function getSubscribedSporecastsPerUser($user){
 	$sporecastservice= 'http://www.spore.com/rest/sporecasts/'.$user;
 	$sporecastxml = getRestService($sporecastservice);
 	$sporecasts = array();
-	foreach($sporecastxml->sporecast as $sporecast)
-	{
-		$sporecastinfo = array("title" => $sporecast->title,
-							   "id" => $sporecast->id,
-							   "author" => $sporecast->author,
-							   "updated" => $sporecast->updated,
-							   "rating" => $sporecast->rating,
-							   "subscriptioncount" => $sporecast->subscriptioncount,
-							   "tags" => $sporecast->tags,
-							   "assetcount" => $sporecast->count);
+	foreach($sporecastxml->sporecast as $sporecast) {
+		$sporecastinfo = array(
+			"title" => $sporecast->title,
+			"id" => $sporecast->id,
+			"author" => $sporecast->author,
+			"updated" => $sporecast->updated,
+			"rating" => $sporecast->rating,
+			"subscriptioncount" => $sporecast->subscriptioncount,
+			"tags" => $sporecast->tags,
+			"assetcount" => $sporecast->count
+		);
 		array_push($sporecasts, $sporecastinfo);
 	}
+
 	return $sporecasts;
 }
 
@@ -234,17 +245,20 @@ function getInfoPerAsset($assetid){
 		echo 'Returned asset is inactive' . "<br>\n";
 	}
 
-	$asset = array("name"=> $assetxml->name ,
-				 "author"=> $assetxml->author ,
-				 "authorid"=> $assetxml->authorid ,
-				 "created"=> $assetxml->created ,
-				 "description"=> $assetxml->description ,
-				 "tags"=> $assetxml->tags ,
-				 "type"=> $assetxml->type ,
-				 "subtype" => $assetxml->subtype,
-				 "sprint" => $assetxml->sprint,
-				 "rating"=> $assetxml->rating ,
-				 "parent"=> $assetxml->parent  );
+	$asset = array(
+		"name"=> $assetxml->name ,
+		"author"=> $assetxml->author ,
+		"authorid"=> $assetxml->authorid ,
+		"created"=> $assetxml->created ,
+		"description"=> $assetxml->description ,
+		"tags"=> $assetxml->tags ,
+		"type"=> $assetxml->type ,
+		"subtype" => $assetxml->subtype,
+		"sprint" => $assetxml->sprint,
+		"rating"=> $assetxml->rating ,
+		"parent"=> $assetxml->parent
+	);
+
 	return $asset;
 }
 
@@ -256,60 +270,64 @@ function getCreatureInfo($creatureid){
 		echo 'Returned asset is inactive' . "<br>\n";
 	}
 
-	$asset = array("cost" => $assetxml->cost ,
-				 "health" => $assetxml->health ,
-				 "height" => $assetxml->height ,
-				 "meanness" => $assetxml->meanness ,
-				 "cuteness" => $assetxml->cuteness ,
-				 "sense" => $assetxml->sense ,
+	$asset = array(
+		"cost" => $assetxml->cost ,
+		"health" => $assetxml->health ,
+		"height" => $assetxml->height ,
+		"meanness" => $assetxml->meanness ,
+		"cuteness" => $assetxml->cuteness ,
+		"sense" => $assetxml->sense ,
 
-				 "bonecount" => $assetxml->bonecount ,
-				 "footcount" => $assetxml->footcount ,
-				 "graspercount" => $assetxml->graspercount ,
-				 "basegear" => $assetxml->basegear ,
+		"bonecount" => $assetxml->bonecount ,
+		"footcount" => $assetxml->footcount ,
+		"graspercount" => $assetxml->graspercount ,
+		"basegear" => $assetxml->basegear ,
 
-				 "carnivore" => $assetxml->carnivore ,
-				 "herbivore" => $assetxml->herbivore ,
+		"carnivore" => $assetxml->carnivore ,
+		"herbivore" => $assetxml->herbivore ,
 
-				 "glide" => $assetxml->glide ,
-				 "sprint" => $assetxml->sprint ,
-				 "stealth" => $assetxml->stealth ,
+		"glide" => $assetxml->glide ,
+		"sprint" => $assetxml->sprint ,
+		"stealth" => $assetxml->stealth ,
 
-				 "bite" => $assetxml->bite ,
-				 "charge" => $assetxml->charge ,
-				 "strike" => $assetxml->strike ,
-				 "spit" => $assetxml->spit ,
+		"bite" => $assetxml->bite ,
+		"charge" => $assetxml->charge ,
+		"strike" => $assetxml->strike ,
+		"spit" => $assetxml->spit ,
 
-				 "feet" => IntVal($assetxml->footcount),
-				 "hand" => IntVal($assetxml->graspercount),
+		"feet" => IntVal($assetxml->footcount),
+		"hand" => IntVal($assetxml->graspercount),
 
-				 "sing" => $assetxml->sing ,
-				 "dance" => $assetxml->dance ,
-				 "gesture" => $assetxml->gesture ,
-				 "posture" => $assetxml->posture  );
+		"sing" => $assetxml->sing ,
+		"dance" => $assetxml->dance ,
+		"gesture" => $assetxml->gesture ,
+		"posture" => $assetxml->posture
+	);
+
 	return $asset;
 }
 
 function getCreaturePreview($creatureid){
-	$assetinfoservice= 'http://www.spore.com/rest/creature/'.$creatureid;
+	$assetinfoservice = 'http://www.spore.com/rest/creature/' . $creatureid;
 	$assetxml = getRestService($assetinfoservice);
 
 	if ($assetxml->status == 0) {
 		return null; // asset inactive
 	}
 
-	$asset = array("thumb"=> $assetxml->thumb ,
-				 "name"=> $assetxml->name
-				 );
+	$asset = array(
+		"thumb"=> $assetxml->thumb ,
+		"name"=> $assetxml->name
+	);
 	return $asset;
 }
 
 function getCreatureModel($creatureid){
-	$assetinfoservice= 'http://static.spore.com/static/model/' . substr($creatureid, 0, 3) . '/' . substr($creatureid, 3, 3) . '/' . substr($creatureid, 6, 3) . '/' . $creatureid . '.xml';
+	$assetinfoservice = 'http://static.spore.com/static/model/' . substr($creatureid, 0, 3) . '/' . substr($creatureid, 3, 3) . '/' . substr($creatureid, 6, 3) . '/' . $creatureid . '.xml';
 	$assetxml = getRestService($assetinfoservice);
 
 	$props = $assetxml->properties;
-	$asset = array("skincolor1" => $props->skincolor1 );
+	$asset = array("skincolor1" => $props->skincolor1);
 	return $asset;
 }
 
@@ -321,16 +339,20 @@ echo '<br>'.$asset["type"];
 echo '<br>'.$asset["rating"];
 */
 
-function getCommentsPerAsset($assetid, $start, $length){
-	$assetcommentservice= 'http://www.spore.com/rest/comments/'.$assetid.'/'.$start.'/'.$length;
+function getCommentsPerAsset($assetid, $start, $length) {
+	$assetcommentservice = 'http://www.spore.com/rest/comments/'.$assetid.'/'.$start.'/'.$length;
 	echo $assetcommentservice;
 	$commentsxml = getRestService($assetcommentservice);
 	$comments = array();
-	foreach($commentsxml->comment as $comment){
-		$acomment=array("message"=> $comment->message ,
-				 "sender"=> $comment->sender ,
-				 "date"=> $comment->date );
-				array_push($comments, $acomment);
+	foreach($commentsxml->comment as $comment) {
+
+		$acomment = array(
+			"message"=> $comment->message ,
+			"sender"=> $comment->sender ,
+			"date"=> $comment->date
+		);
+		array_push($comments, $acomment);
+
 	}
 	return $comments;
 }
@@ -344,16 +366,21 @@ for($i =0; $i<sizeof($com); $i++)
 }
 */
 
-function getAssetsPerSporecast($sporecastid, $start, $length){
-	$assetservice= 'http://www.spore.com/rest/assets/sporecast/'.$sporecastid.'/'.$start.'/'.$length;
+function getAssetsPerSporecast($sporecastid, $start, $length) {
+	$assetservice = 'http://www.spore.com/rest/assets/sporecast/' . $sporecastid . '/' . $start . '/' . $length;
 	$assetxml = getRestService($assetservice);
 	$assets = array();
-	foreach($assetxml->asset as $asset)
-	{
-		$assetinfo = array(	"name" => $asset->name,
-							"id" => $asset->id);
+
+	foreach($assetxml->asset as $asset) {
+
+		$assetinfo = array(
+			"name" => $asset->name,
+			"id" => $asset->id
+		);
 		array_push($assets, $assetinfo);
+
 	}
+
 	return $assets;
 }
 
@@ -370,33 +397,33 @@ for($i = 0; $i < sizeof($ast); $i++)
 
 
 function getAssetsFromQuery($query, $start, $length, $type){
-	$assetservice= 'http://www.spore.com/rest/assets/search/'.urlencode($query).'/'.$start.'/'.$length.'/'.strtoupper($type);
+	$assetservice = 'http://www.spore.com/rest/assets/search/'.urlencode($query).'/'.$start.'/'.$length.'/'.strtoupper($type);
 	$assetxml = getRestService($assetservice);
-	if($assetxml == '0')
-	{
-
+	if ($assetxml == '0') {
 		return '0';
-	}else{
-	$assets = array();
-	foreach($assetxml->asset as $asset)
-	{
-		$id = $asset->id;
-		$image = 'http://www.spore.com/static/image/'.substr($id, 0, 3).'/'.substr($id, 3, 3).'/'.substr($id,6,3).'/'.$id.'_lrg.png';
-		$thumb = 'http://www.spore.com/static/thumb/'.substr($id, 0, 3).'/'.substr($id, 3, 3).'/'.substr($id,6,3).'/'.$id.'.png';
+	} else {
+		$assets = array();
+		foreach($assetxml->asset as $asset) {
+			$id = $asset->id;
+			$image = 'http://www.spore.com/static/image/' . substr($id, 0, 3) . '/' . substr($id, 3, 3) . '/' . substr($id,6,3) . '/' . $id . '_lrg.png';
+			$thumb = 'http://www.spore.com/static/thumb/' . substr($id, 0, 3) . '/' . substr($id, 3, 3) . '/' . substr($id,6,3) . '/' . $id . '.png';
 
-		$assetinfo = array(	"name" => $asset->name,
-							"id" => $asset->id,
-							"created" => $asset->created,
-							"author" => $asset->author,
-							"image"=> $image,
-							"thumb"=> $thumb,
-							"rating" => $asset->rating,
-							"type" => $asset->type ,
-							"subtype" => $asset->subtype,
-							"parent" => $asset->parent);
-		array_push($assets, $assetinfo);
-	}
-	return $assets;
+			$assetinfo = array(
+				"name" => $asset->name,
+				"id" => $asset->id,
+				"created" => $asset->created,
+				"author" => $asset->author,
+				"image"=> $image,
+				"thumb"=> $thumb,
+				"rating" => $asset->rating,
+				"type" => $asset->type ,
+				"subtype" => $asset->subtype,
+				"parent" => $asset->parent
+			);
+
+			array_push($assets, $assetinfo);
+		}
+		return $assets;
 	}
 }
 
