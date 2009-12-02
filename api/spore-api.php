@@ -67,6 +67,8 @@ function getRestServiceCurl($url) {
 	//	curl_setopt($ch, CURLOPT_URL, "maxis.com");
 
 	//return the transfer as a string
+	// We'll use deflate for now until I figure out what's wrong with 'gzip' option
+	curl_setopt($ch, CURLOPT_ENCODING, 'deflate');
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 	// $output contains the output string
