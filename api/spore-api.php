@@ -87,12 +87,12 @@ function getRestServiceCurl($url) {
 		$data = mb_convert_encoding($data, 'UTF-8');
 
 		try {
-			$xml = new SimpleXMLElement($urldata);
+			$xml = new SimpleXMLElement($data);
 			$result = $xml;
 
 		} catch (Exception $e) {
 
-			echo 'Bad XML';
+			echo 'Bad XML:' . $data;
 			$result = '0';
 
 		}
