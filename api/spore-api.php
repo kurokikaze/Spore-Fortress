@@ -61,9 +61,10 @@ function getRestService($url) {
 */
 function getRestServiceCurl($url) {
 
-	$ch = curl_init("http://www.example.com/");
+	$ch = curl_init($url);
 	// set url
-	curl_setopt($ch, CURLOPT_URL, "example.com");
+	// This was already set on curl_init (hopefully)
+	//	curl_setopt($ch, CURLOPT_URL, "maxis.com");
 
 	//return the transfer as a string
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
