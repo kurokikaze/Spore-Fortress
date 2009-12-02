@@ -24,30 +24,32 @@ function getRestService($url) {
 
 		return getRestServiceCurl($url);
 
-	} else {
+	} elseif (ini_get('allow_url_fopen') == true) {
 
-	$file = fopen($url, 'r');
-	if ($file === false) {
-		echo 'Cannot open asset url';
-		return '0';
+		$file = fopen($url, 'r');
+		if ($file === false) {
+			echo 'Cannot open asset url';
+			return '0';
 
-	} else {
-		$urldata = stream_get_contents($file);
-		fclose($file);
+		} else {
+			$urldata = stream_get_contents($file);
+			fclose($file);
 
-		// Convert to UTF-8 for SimpleXML to work
-		$urldata = mb_convert_encoding($urldata, 'UTF-8');
+			// Convert to UTF-8 for SimpleXML to work
+			$urldata = mb_convert_encoding($urldata, 'UTF-8');
 
-		try {
-			$xml = new SimpleXMLElement($urldata);
-			$result = $xml;
-		} catch (Exception $e) {
-			echo 'Bad XML';
-			$result = '0';
+			try {
+				$xml = new SimpleXMLElement($urldata);
+				$result = $xml;
+			} catch (Exception $e) {
+				echo 'Bad XML';
+				$result = '0';
+			}
+			return $result;
 		}
-		return $result;
-	}
 
+	} else {
+		echo 'No ways to fetch XML, sorry';
 	}
 }
 
