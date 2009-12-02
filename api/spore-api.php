@@ -68,6 +68,7 @@ function getRestServiceCurl($url) {
 
 	//return the transfer as a string
 	// We'll use deflate for now until I figure out what's wrong with 'gzip' option
+	// Unfortunately i have no curl to test it right now, maybe installing it later this week
 	curl_setopt($ch, CURLOPT_ENCODING, 'deflate');
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
