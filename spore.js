@@ -63,7 +63,7 @@ spore_fort.activate_dragging = function () {
 
 	$('#transmuter').droppable({
 		drop: function(event, ui) {
-			return add_to_transmuter($(ui.draggable), $(this));
+			return spore_fort.add_to_transmuter($(ui.draggable), $(this));
 		}
 	});
 }
