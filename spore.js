@@ -1,47 +1,50 @@
-function show_creature(creature) {
+// Namespace
+spore_fort = {};
+
+spore_fort.show_creature = function (creature) {
 	creature_slot = $('<div class="creature" />').html('<h1>' + creature.name + '</h1>');
 	$('<img/>').attr('src', creature.thumb).attr('id', creature.id).attr('rel', creature.name).attr('class', 'draggable').appendTo(creature_slot);
 	creature_slot.appendTo('#selector')
 }
 
-function load_user_creatures(user) {
+spore_fort.load_user_creatures = function (user) {
 	$.getJSON("proxy.php?action=user&user=" + user, function(data){
 
 		$.each(data, function(i, creature){
-			show_creature(creature);
+			spore_fort.show_creature(creature);
 		});
 
 	});
 
 }
 
-function search_creatures(query) {
+spore_fort.search_creatures = function (query) {
 	$.getJSON("proxy.php?action=search&query=" + query, function(data){
 
 		$.each(data, function(i, creature){
-			show_creature(creature);
+			spore_fort.show_creature(creature);
 		});
 
-		activate_dragging();
+		spore_fort.activate_dragging();
 
 	});
 
 }
 
-function top_rated_creatures(query) {
+spore_fort.top_rated_creatures = function (query) {
 	$.getJSON("proxy.php?action=toprated", function(data){
 
 		$.each(data, function(i, creature){
-			show_creature(creature);
+			spore_fort.show_creature(creature);
 		});
 
-		activate_dragging();
+		spore_fort.activate_dragging();
 
 	});
 
 }
 
-function add_to_transmuter() {
+spore_fort.add_to_transmuter = function () {
 	$.get("spore.php?id=" + ui.draggable.attr('id'), function(data) {
 		alert(data);
 	})
@@ -49,7 +52,7 @@ function add_to_transmuter() {
 
 
 
-function activate_dragging() {
+spore_fort.activate_dragging = function () {
 
 	$('.draggable').draggable({
 						 helper : 'clone',
@@ -65,7 +68,7 @@ function activate_dragging() {
 	});
 }
 
-function add_to_transmuter(creature, target) {
+spore_fort.add_to_transmuter = function (creature, target) {
 	$('<li/>').attr('rel', $(creature).attr('id')).html($(creature).attr('rel')).appendTo('ul#readylist');
 	return true;
 }
@@ -75,17 +78,16 @@ function add_to_transmuter(creature, target) {
 $(document).ready(function() {
 
 	$("#find_user").bind('click', function() {
-
 		alert('User search bind fired');
-		load_user_creatures($('#searchfield').val());
+		spore_fort.load_user_creatures($('#searchfield').val());
 	});
 
 	$("#find_word").bind('click', function() {
-		search_creatures($('#searchfield').val());
+		spore_fort.search_creatures($('#searchfield').val());
 	});
 
 	$("#toprated").bind('click', function() {
-		top_rated_creatures($('#searchfield').val());
+		spore_fort.top_rated_creatures($('#searchfield').val());
 	});
 
 	$("#clean").bind('click', function() {
@@ -97,7 +99,8 @@ $(document).ready(function() {
 		$('#transmuter').find('li').each(function(){
 			querystring = querystring + '&creatures[]=' + $(this).attr('rel');
 		});
-//		window.alert(querystring);
+
+		// Redirect window location to file generation script
 		window.location = "spore.php?" + querystring;
 	});
 
