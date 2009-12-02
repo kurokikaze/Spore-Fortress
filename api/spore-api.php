@@ -12,7 +12,19 @@ To view how functions work, un-comment each Tester example to understand the for
 
 include('utf.php');
 
-function getRestService($url){
+/**
+* Fetch XML from URL with fopen. Requires `allow_url_fopen` to be set to TRUE
+*
+* @param string $url URL to fetch
+* @return SimpleXMLElement Resulting XML
+*/
+function getRestService($url) {
+
+	if (function_exists('curl_init')) {
+
+		return getRestServiceCurl($url);
+
+	} else {
 
 	$file = fopen($url, 'r');
 	if ($file === false) {
@@ -35,7 +47,55 @@ function getRestService($url){
 		}
 		return $result;
 	}
+
+	}
 }
+
+/**
+* Fetch XML from URL with curl module. Curl supports gzip encoding, so we can fetch XML faster
+*
+* @param string $url URL to fetch
+* @return SimpleXMLElement Resulting XML
+*/
+function getRestServiceCurl($url) {
+
+	$ch = curl_init("http://www.example.com/");
+	// set url
+	curl_setopt($ch, CURLOPT_URL, "example.com");
+
+	//return the transfer as a string
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+	// $output contains the output string
+	$data = curl_exec($ch);
+
+	// close curl resource to free up system resources
+	curl_close($ch);
+
+	if ($data === false) {
+		echo 'Cannot open asset url';
+		return '0';
+
+	} else {
+		// Convert to UTF-8 for SimpleXML to work
+		$data = mb_convert_encoding($data, 'UTF-8');
+
+		try {
+			$xml = new SimpleXMLElement($urldata);
+			$result = $xml;
+
+		} catch (Exception $e) {
+
+			echo 'Bad XML';
+			$result = '0';
+
+		}
+
+		return $result;
+	}
+}
+
+
 
 function getStats() {
 	$statsservice = 'http://www.spore.com/rest/stats';
