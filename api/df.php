@@ -36,7 +36,7 @@
 				$saturation = 0;
 			}
 
-			return $value > 0.7 && $saturation > 0.7;
+			return $value > 0.5 && $saturation > 0.5;
 
 		}
 
