@@ -156,4 +156,3 @@
 			return $raw_object;
 		}
 	}
-?>

@@ -127,5 +127,3 @@
 	header('Content-Disposition: attachment; filename="sporecreatures.txt"');
 
 	echo implode("\n\n", $output);
-
-?>
