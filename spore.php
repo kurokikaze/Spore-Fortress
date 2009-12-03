@@ -96,6 +96,10 @@
 				$df_creature->add_property('prefstring', 'beautiful songs');
 			}
 
+			if (DwarfFortress::is_color_bright($model['skincolor1'])) {
+				$df_creature->add_property('prefstring', 'bright color');
+			}
+
 			if ($creature['dance'] > 2) {
 				$df_creature->add_property('prefstring', 'lovely dances');
 			}

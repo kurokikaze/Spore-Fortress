@@ -1,5 +1,45 @@
 <?php
 	abstract class DwarfFortress {
+		/**
+		* Checking if color is bright enough for dwarves to like
+		* Algorithm used: color conversion by Eugene Vishnevsky
+		*
+		* @link http://www.cs.rit.edu/~ncs/color/t_convert.html
+		*
+		* @param string $color Color in Maxis format - comma-separated string
+		*/
+		public function is_color_bright($color) {
+
+			$channels = explode (',' , $color);
+
+			// Spore API stores color channels from 0 to 1
+			// This algorithm originally uses same bounds, so no conversions here
+			$rgb_color = array(
+				'r' => $channels[0],
+				'g' => $channels[1],
+				'b' => $channels[2]
+			);
+
+			$min = min( $rgb_color['r'], $rgb_color['g'], $rgb_color['b'] );
+			$max = max( $rgb_color['r'], $rgb_color['g'], $rgb_color['b'] );
+
+			$value = $max;          // Value (brightness-like) component.
+									// We also need saturation to separate near-white colors
+			$delta = $max - $min;
+
+
+			if( $max != 0 ) {
+				$saturation = $delta / $max;        // s
+			} else {
+				// On this branch we handle black color. We should set value to -1, but because
+				// sat == 0 will lead to same result (color is not bright), we don't bother
+				$saturation = 0;
+			}
+
+			return $value > 0.7 && $saturation > 0.7;
+
+		}
+
 		public function find_nearest_color($color) {
 
 			$distance = 25000;
