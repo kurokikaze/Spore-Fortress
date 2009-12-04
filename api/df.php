@@ -178,7 +178,7 @@
 				}
 			}
 
-			$raw_object .= '[BODY:' . implode(':', $this->body) . ']';
+			$raw_object .= '[BODY:' . implode(':', $this->body) . ']' . "\n";
 			foreach($this->raws AS $property) {
 
 				foreach ($property AS $token => $value) {

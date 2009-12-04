@@ -50,7 +50,7 @@
 			}
 
 			$df_creature->add_property('modvalue', '3'); // value modifier for skin, bones etc
-			$df_creature->add_property('homeotherm', 10060 + rand(0, 40)); // homeostasis temperature
+			$df_creature->add_property('homeotherm', 10050 + rand(0, 20)); // homeostasis temperature
 
 			// Population stats
 			$df_creature->add_property('cluster_number', '1:4'); // size of herds
