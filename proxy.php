@@ -23,8 +23,13 @@ switch ($_GET['action']) {
 	case 'featured':
 		break;
 
-	case 'search':
+	case 'random':
 		$creatures = getAssetsFromQuery('random', 0, 5, 'creature');
+
+		// Prevent browser caching for random entries
+		header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+
 		foreach ($creatures AS $creature) {
 /*			$image = getCreaturePreview($creature['id']);*/
 			$strings[] = ' "' . $creature['id'] . '" : { "name" : "' . $creature['name'] . '", "id" : "' . $creature['id'] . '", "thumb" : "' . $creature['thumb'] . '" } ';

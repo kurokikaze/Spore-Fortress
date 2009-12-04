@@ -18,8 +18,8 @@ spore_fort.load_user_creatures = function (user) {
 
 }
 
-spore_fort.search_creatures = function (query) {
-	$.getJSON("proxy.php?action=search&query=" + query, function(data){
+spore_fort.get_random_creatures = function (query) {
+	$.getJSON("proxy.php?action=random&query=" + query + "&rand=" + Math.floor(Math.random()*10001), function(data){
 
 		$.each(data, function(i, creature){
 			spore_fort.show_creature(creature);
@@ -82,12 +82,12 @@ $(document).ready(function() {
 		spore_fort.load_user_creatures($('#searchfield').val());
 	});
 
-	$("#find_word").bind('click', function() {
-		spore_fort.search_creatures($('#searchfield').val());
+	$("#random").bind('click', function() {
+		spore_fort.get_random_creatures();
 	});
 
 	$("#toprated").bind('click', function() {
-		spore_fort.top_rated_creatures($('#searchfield').val());
+		spore_fort.top_rated_creatures();
 	});
 
 	$("#clean").bind('click', function() {
