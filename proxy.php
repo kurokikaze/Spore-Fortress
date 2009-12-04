@@ -29,6 +29,7 @@ switch ($_GET['action']) {
 		// Prevent browser caching for random entries
 		header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 
 		foreach ($creatures AS $creature) {
 /*			$image = getCreaturePreview($creature['id']);*/
@@ -37,6 +38,6 @@ switch ($_GET['action']) {
 		break;
 }
 
-header('Content-type: application/x-json');
+header('Content-Type: application/x-json');
 
 echo '{ ' . implode(', ', $strings) . ' }';
