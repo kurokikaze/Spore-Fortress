@@ -157,6 +157,14 @@
 					array_slice($attacks, 0, 2, true); // Only first attacks
 				}
 
+				$numbering = array(
+					0 => 'MAIN',
+					1 => 'SECOND'
+				);
+
+				$i = 0;
+
+				$battle_stack = '';
 				foreach ($attacks as $type => $power) {
 					switch ($type) {
 					   case 'charge':
@@ -175,10 +183,22 @@
 
 						 break;
 					}
+
+					$attack_number = $numbering[$i];
+
+					$attack_record = '[ATTACK:' . $attack_number . ':BYTYPE:' . $attack_type . ':' . $attack_text . ':1:' . $attack_power . ':BLUDGEON]';
+
+					$battle_stack .= $attack_record . "\n";
+
+					$i++;
 				}
 			}
 
 			$raw_object .= '[BODY:' . implode(':', $this->body) . ']' . "\n";
+
+			// Add attacks
+			$raw_object .= $battle_stack;
+
 			foreach($this->raws AS $property) {
 
 				foreach ($property AS $token => $value) {
