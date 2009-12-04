@@ -49,17 +49,26 @@
 				$df_creature->add_body_part('SPIDER'); // I know its wrong
 			}
 
-			$df_creature->add_property('modvalue', '3'); // value modifier for skin, bones etc
-			$df_creature->add_property('homeotherm', 10050 + rand(0, 20)); // homeostasis temperature
+			// value modifier for skin, bones etc
+			$df_creature->add_property('modvalue', '3');
+
+			// homeostasis temperature
+			$df_creature->add_property('homeotherm', 10050 + rand(0, 20));
 
 			// Population stats
-			$df_creature->add_property('cluster_number', '1:4'); // size of herds
-			$df_creature->add_property('population_number', '15:30'); // total population cap
+
+			// size of herds
+			$df_creature->add_property('cluster_number', '1:4');
+
+			// total population cap on map in a year
+			$df_creature->add_property('population_number', '15:30');
+
+			// Reasonable value, but can be bigger for some creatures
 			$df_creature->add_property('child', rand(1, 4));
 
 			// Personal Traits
 			$df_creature->add_property('speed', (2 + $creature['sprint']) * 200); // speed
-			$df_creature->add_property('size', IntVal(4 * $creature['height'] - 1)); // speed
+			$df_creature->add_property('size', IntVal(4 * $creature['height'] - 1)); // size
 
 			if (IntVal(4 * $creature['height'] - 1) >= 11) {
 				$df_creature->add_property('megabeast');
@@ -101,7 +110,22 @@
 			}
 
 			if ($creature['dance'] > 2) {
-				$df_creature->add_property('prefstring', 'lovely dances');
+				switch (rand(0,2)) {
+					case 0:
+						$df_creature->add_property('prefstring', 'lovely dances');
+						break;
+					case 1:
+						$df_creature->add_property('prefstring', 'funny dances');
+						break;
+					case 2:
+						$df_creature->add_property('prefstring', 'clumsy dances');
+						break;
+				}
+
+			}
+
+			if ($creature['height'] >= 4) {
+				$df_creature->add_property('prefstring', 'strength');
 			}
 
 			if ($creature['gesture'] > 2) {
