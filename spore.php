@@ -84,15 +84,18 @@
 			// Attacks. There s an error here: only 1 attack can be main, i think
 
 			if ($creature['charge'] > 0) {
-				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:kick:kicks:1:' . IntVal($creature['charge']) . ':BLUDGEON');
+				// $df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:kick:kicks:1:' . IntVal($creature['charge']) . ':BLUDGEON');
+				$df_creature->add_attack('kick', IntVal($creature['charge']));
 			}
 
 			if ($creature['bite'] > 0) {
-				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:bite:bites:1:' . IntVal($creature['bite']) . ':BLUDGEON');
+//				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:bite:bites:1:' . IntVal($creature['bite']) . ':BLUDGEON');
+				$df_creature->add_attack('bite', IntVal($creature['charge']));
 			}
 
 			if ($creature['strike'] > 0) {
-				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:strike:strikes:1:' . IntVal($creature['strike']) . ':BLUDGEON');
+//				$df_creature->add_property('attack', 'MAIN:BYTYPE:STANCE:strike:strikes:1:' . IntVal($creature['strike']) . ':BLUDGEON');
+				$df_creature->add_attack('strike', IntVal($creature['charge']));
 			}
 
 			// No luck for spitters right now

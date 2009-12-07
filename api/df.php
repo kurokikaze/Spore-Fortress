@@ -152,13 +152,30 @@
 			$attacks = $this->attacks;
 
 			if (is_array($attacks) && !empty($attacks)) {
-				rsort($attacks);
+				arsort($attacks, true);
 				if (count($attacks) > 2) {
-					array_slice($attacks, 0, 2, true); // Only first attacks
+					$attacks = array_slice($attacks, 0, 2, true); // Only first attacks
 				}
+
+				$numbering = array(
+					0 => 'MAIN',
+					1 => 'SECOND',
+					2 => 'THIRD'
+				);
+
+				$i = 0;
+
+				$battle_stack = '';
+
+				// print_r($attacks);
 
 				foreach ($attacks as $type => $power) {
 					switch ($type) {
+					   case 'kick':
+						 $attack_text = 'kick:kicks';
+						 $attack_type = 'BLUDGEON';
+
+						 break;
 					   case 'charge':
 						 $attack_text = 'charge:charges';
 						 $attack_type = 'BLUDGEON';
@@ -174,11 +191,29 @@
 						 $attack_type = 'GRASP';
 
 						 break;
+
+					   default:
+						 continue;
+						 break;
+					}
+
+					if ($power > 0) {
+						$attack_number = $numbering[$i];
+
+						$attack_record = '[ATTACK:' . $attack_number . ':BYTYPE:' . $attack_type . ':' . $attack_text . ':1:' . $power . ':BLUDGEON]';
+
+						$battle_stack .= $attack_record . "\n";
+
+						$i++;
 					}
 				}
 			}
 
 			$raw_object .= '[BODY:' . implode(':', $this->body) . ']' . "\n";
+
+			// Add attacks
+			$raw_object .= $battle_stack;
+
 			foreach($this->raws AS $property) {
 
 				foreach ($property AS $token => $value) {
