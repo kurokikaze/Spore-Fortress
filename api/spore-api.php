@@ -130,12 +130,6 @@ function getUserIdFromName($user) {
 
 }
 
-/**  User Info Tester **/
-/*
-$user = getUserIdFromName('MaxisMichael');
-echo $user;
-*/
-
 function getUserInfo($user){
 	$userservice = 'http://www.spore.com/rest/user/'.$user;
 	$userxml = getRestService($userservice);
@@ -153,18 +147,6 @@ function getUserInfo($user){
 		return $userinfo;
 	}
 }
-
-/**  User Info Tester **/
-/*
-$user = getUserInfo('MaxisMichael');
-if($user == '0')
-{
-	echo 'No user';
-}else{
-	echo $user["id"];
-	echo '<img src ="'.$user["image"].'" width=100>';
-}
-*/
 
 function getBuddiesPerUser($user, $start, $length){
 	$buddyservice= 'http://www.spore.com/rest/users/buddies/'.$user.'/'.$start.'/'.$length;
@@ -188,20 +170,6 @@ function getBuddiesPerUser($user, $start, $length){
 }
 
 
-/** Buddies Tester **/
-/*
-$bud = getBuddiesPerUser('MaxisMichael', '0', '4');
-if($bud == '0')
-{
-	echo 'No user found.';
-}else{
-	for($i = 0; $i < sizeof($bud); $i++)
-	{
-		echo $bud[$i]["name"];
-		echo '-'.$bud[$i]["id"].'<br>';
-	}
-}
-*/
 function getAssetsPerUser($user, $start, $length, $type) {
 	$assetservice= 'http://www.spore.com/rest/assets/user/'.$user.'/'.$start.'/'.$length.'/'.$type;
 	$assetxml = getRestService($assetservice);
@@ -232,21 +200,6 @@ function getAssetsPerUser($user, $start, $length, $type) {
 	}
 }
 
-/** Users Assets Tester **/
-/*
-$ast = getAssetsPerUser('MaxisMichael', '0', '15', 'BLAH');
-if($ast =='0')
-{
-	echo 'No user found.';
-}else{
-	for($i = 0; $i < sizeof($ast); $i++)
-	{
-		echo $ast[$i]["name"];
-		echo '-'.$ast[$i]["image"].'<br>';
-	}
-}
-*/
-
 function getAchievementsPerUser($user, $start, $length){
 
 	$achievementservice= 'http://www.spore.com/rest/achievements/'.$user.'/'.$start.'/'.$length;
@@ -263,16 +216,6 @@ function getAchievementsPerUser($user, $start, $length){
 
 	return $achievements;
 }
-
-/** Users Achievements Tester **/
-/*
-$ach = getAchievementsPerUser('MaxisCactus', '0', '15');
-for($i = 0; $i < sizeof($ach); $i++)
-{
-	echo $ach[$i]["guid"];
-	echo '-'.$ach[$i]["date"].'<br>';
-}
-*/
 
 function getSubscribedSporecastsPerUser($user){
 	$sporecastservice= 'http://www.spore.com/rest/sporecasts/'.$user;
@@ -294,15 +237,6 @@ function getSubscribedSporecastsPerUser($user){
 
 	return $sporecasts;
 }
-
-/**   User's Sporecasts Tester **/
-/*$sporecasts = getSubscribedSporecastsPerUser('MaxisMichael');
-for($i = 0; $i<sizeof($sporecasts); $i++)
-{
-	echo $sporecasts[$i]["title"].' - '.$sporecasts[$i]["author"];
-}
-*/
-
 
 function getInfoPerAsset($assetid){
 	$assetinfoservice= 'http://www.spore.com/rest/asset/'.$assetid;
@@ -397,14 +331,6 @@ function getCreatureModel($creatureid){
 	return $asset;
 }
 
-/** Info per Asset Tester**/
-/*
-$asset = getInfoPerAsset('500138306571');
-echo '<br>'.$asset["name"];
-echo '<br>'.$asset["type"];
-echo '<br>'.$asset["rating"];
-*/
-
 function getCommentsPerAsset($assetid, $start, $length) {
 	$assetcommentservice = 'http://www.spore.com/rest/comments/'.$assetid.'/'.$start.'/'.$length;
 	echo $assetcommentservice;
@@ -423,15 +349,6 @@ function getCommentsPerAsset($assetid, $start, $length) {
 	return $comments;
 }
 
-/**  Comments Per Asset Tester **/
-/*
-$com=getCommentsPerAsset('500269321470', '0', '5');
-for($i =0; $i<sizeof($com); $i++)
-{
-	echo $com[$i]["message"].' - '.$com[$i]["sender"].'<br>';
-}
-*/
-
 function getAssetsPerSporecast($sporecastid, $start, $length) {
 	$assetservice = 'http://www.spore.com/rest/assets/sporecast/' . $sporecastid . '/' . $start . '/' . $length;
 	$assetxml = getRestService($assetservice);
@@ -449,17 +366,6 @@ function getAssetsPerSporecast($sporecastid, $start, $length) {
 
 	return $assets;
 }
-
-
-/** Assets for a Sporecast  **/
-/*
-$ast = getAssetsPerSporecast('500190457259', '0', '15');
-for($i = 0; $i < sizeof($ast); $i++)
-{
-	echo $ast[$i]["name"];
-	echo '-'.$ast[$i]["id"].'<br>';
-}
-*/
 
 
 function getAssetsFromQuery($query, $start, $length, $type){
@@ -492,16 +398,3 @@ function getAssetsFromQuery($query, $start, $length, $type){
 		return $assets;
 	}
 }
-
-/** Search Assets Tester **/
-/*
-$ast = getAssetsFromQuery('TOP_RATED', '0', '15', 'BLAH');
-for($i = 0; $i < sizeof($ast); $i++)
-{
-	echo $ast[$i]["name"];
-	echo '-'.$ast[$i]["rating"].'<br>';
-}
-*/
-
-
-?>
