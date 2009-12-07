@@ -106,128 +106,128 @@
 		}
 	}
 
-	class DF_Creature {
+class DF_Creature {
 
-		private $name;
-		// Some stats
-		private $stats;
-		private $attacks;
-		private $body = array('2LUNGS', 'HEART', 'GUTS', 'ORGANS', 'SPINE', 'BRAIN', 'MOUTH'); // Starter set
+	private $name;
+	// Some stats
+	private $stats;
+	private $attacks;
+	private $body = array('2LUNGS', 'HEART', 'GUTS', 'ORGANS', 'SPINE', 'BRAIN', 'MOUTH'); // Starter set
 
-		private $raws;
+	private $raws;
 
-		public function add_attack($type, $power) {
-			$this->attacks[$type] = $power;
-		}
+	public function add_attack($type, $power) {
+		$this->attacks[$type] = $power;
+	}
 
-		public function add_body_part($name, $count = 1) {
-			$this->body[] = $name;
-		}
+	public function add_body_part($name, $count = 1) {
+		$this->body[] = $name;
+	}
 
-		public function add_property($property_name, $value = '') {
-			$this->raws[] = array($property_name => $value);
-		}
+	public function add_property($property_name, $value = '') {
+		$this->raws[] = array($property_name => $value);
+	}
 
-		public function set_name($name) {
-			if (!empty($name)) {
-				$this->name = $name;
-			} else {
-				throw new Exception("Empty name given");
-			}
-		}
-
-		// Prepares raws from array of values
-		// @todo: make correctness check to avoid errorneous tags
-		// @todo: make escaping of token values
-		public function get_raws() {
-
-			$raw_object = '';
-
-			$raw_object .= '[CREATURE:'. strtoupper(str_replace(' ', '_', $this->name)) . ']' . "\n";
-			$raw_object .= "\t" . '[NAME:' . $this->name . ':' . $this->name .'s:'. $this->name . ']' . "\n";
-			$raw_object .= "\t" . '[TILE:' . substr($this->name, 0, 1) . ']' . "\n";
-			$raw_object .= "\t" . '[STANDARD_FLESH]' . "\n";
-			$raw_object .= "\t" . '[LARGE_ROAMING]' . "\n";
-
-			$attacks = $this->attacks;
-
-			if (is_array($attacks) && !empty($attacks)) {
-				arsort($attacks, true);
-				if (count($attacks) > 2) {
-					$attacks = array_slice($attacks, 0, 2, true); // Only first attacks
-				}
-
-				$numbering = array(
-					0 => 'MAIN',
-					1 => 'SECOND',
-					2 => 'THIRD'
-				);
-
-				$i = 0;
-
-				$battle_stack = '';
-
-				// print_r($attacks);
-
-				foreach ($attacks as $type => $power) {
-					switch ($type) {
-					   case 'kick':
-						 $attack_text = 'kick:kicks';
-						 $attack_type = 'BLUDGEON';
-
-						 break;
-					   case 'charge':
-						 $attack_text = 'charge:charges';
-						 $attack_type = 'BLUDGEON';
-
-						 break;
-					   case 'bite':
-						 $attack_text = 'bite:bites';
-						 $attack_type = 'MOUTH';
-
-						 break;
-					   case 'strike':
-						 $attack_text = 'strike:strikes';
-						 $attack_type = 'GRASP';
-
-						 break;
-
-					   default:
-						 continue;
-						 break;
-					}
-
-					if ($power > 0) {
-						$attack_number = $numbering[$i];
-
-						$attack_record = '[ATTACK:' . $attack_number . ':BYTYPE:' . $attack_type . ':' . $attack_text . ':1:' . $power . ':BLUDGEON]';
-
-						$battle_stack .= $attack_record . "\n";
-
-						$i++;
-					}
-				}
-			}
-
-			$raw_object .= '[BODY:' . implode(':', $this->body) . ']' . "\n";
-
-			// Add attacks
-			$raw_object .= $battle_stack;
-
-			foreach($this->raws AS $property) {
-
-				foreach ($property AS $token => $value) {
-					// Add tabulation before creature tokens
-					$break = '';
-					if (strtoupper($token) != 'CREATURE') {
-						$break = "\t";
-					}
-
-					$raw_object .= $break . '[' . strtoupper($token) . (($value!='')?':'  . $value:'') . ']' . "\n";
-				}
-			}
-
-
-			return $raw_object;
+	public function set_name($name) {
+		if (!empty($name)) {
+			$this->name = $name;
+		} else {
+			throw new Exception("Empty name given");
 		}
 	}
+
+	// Prepares raws from array of values
+	// @todo: make correctness check to avoid errorneous tags
+	// @todo: make escaping of token values
+	public function get_raws() {
+
+		$raw_object = '';
+
+		$raw_object .= '[CREATURE:'. strtoupper(str_replace(' ', '_', $this->name)) . ']' . "\n";
+		$raw_object .= "\t" . '[NAME:' . $this->name . ':' . $this->name .'s:'. $this->name . ']' . "\n";
+		$raw_object .= "\t" . '[TILE:' . substr($this->name, 0, 1) . ']' . "\n";
+		$raw_object .= "\t" . '[STANDARD_FLESH]' . "\n";
+		$raw_object .= "\t" . '[LARGE_ROAMING]' . "\n";
+
+		$attacks = $this->attacks;
+
+		if (is_array($attacks) && !empty($attacks)) {
+			arsort($attacks, true);
+			if (count($attacks) > 2) {
+				$attacks = array_slice($attacks, 0, 2, true); // Only first attacks
+			}
+
+			$numbering = array(
+				0 => 'MAIN',
+				1 => 'SECOND',
+				2 => 'THIRD'
+			);
+
+			$i = 0;
+
+			$battle_stack = '';
+
+			// print_r($attacks);
+
+			foreach ($attacks as $type => $power) {
+				switch ($type) {
+				   case 'kick':
+					 $attack_text = 'kick:kicks';
+					 $attack_type = 'BLUDGEON';
+
+					 break;
+				   case 'charge':
+					 $attack_text = 'charge:charges';
+					 $attack_type = 'BLUDGEON';
+
+					 break;
+				   case 'bite':
+					 $attack_text = 'bite:bites';
+					 $attack_type = 'MOUTH';
+
+					 break;
+				   case 'strike':
+					 $attack_text = 'strike:strikes';
+					 $attack_type = 'GRASP';
+
+					 break;
+
+				   default:
+					 continue;
+					 break;
+				}
+
+				if ($power > 0) {
+					$attack_number = $numbering[$i];
+
+					$attack_record = "\t" . '[ATTACK:' . $attack_number . ':BYTYPE:' . $attack_type . ':' . $attack_text . ':1:' . $power . ':BLUDGEON]';
+
+					$battle_stack .= $attack_record . "\n";
+
+					$i++;
+				}
+			}
+		}
+
+		$raw_object .= "\t" . '[BODY:' . implode(':', $this->body) . ']' . "\n";
+
+		// Add attacks
+		$raw_object .= $battle_stack;
+
+		foreach($this->raws AS $property) {
+
+			foreach ($property AS $token => $value) {
+				// Add tabulation before creature tokens
+				$break = '';
+				if (strtoupper($token) != 'CREATURE') {
+					$break = "\t";
+				}
+
+				$raw_object .= $break . '[' . strtoupper($token) . (($value!='')?':'  . $value:'') . ']' . "\n";
+			}
+		}
+
+
+		return $raw_object;
+	}
+}
