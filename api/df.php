@@ -152,7 +152,7 @@
 			$attacks = $this->attacks;
 
 			if (is_array($attacks) && !empty($attacks)) {
-				// rsort($attacks, true);
+				arsort($attacks, true);
 				if (count($attacks) > 2) {
 					$attacks = array_slice($attacks, 0, 2, true); // Only first attacks
 				}
