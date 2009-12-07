@@ -19,7 +19,16 @@ spore_fort.load_user_creatures = function (user) {
 }
 
 spore_fort.get_random_creatures = function (query) {
-	$.getJSON("proxy.php?action=random&query=" + query + "&rand=" + Math.floor(Math.random()*10001), function(data){
+
+	// @todo: move this to function's local variable
+	if (typeof window.creature_start == "undefined") {
+		window.creature_start = 0;
+	} else {
+		window.creature_start = window.creature_start + 4;
+	}
+
+	window.alert('Starting pager from ' + window.creature_start);
+	$.getJSON("proxy.php?action=random&query=" + query + "&start=" + window.creature_start, function(data) {
 
 		$.each(data, function(i, creature){
 			spore_fort.show_creature(creature);

@@ -24,7 +24,14 @@ switch ($_GET['action']) {
 		break;
 
 	case 'random':
-		$creatures = getAssetsFromQuery('random', 0, 5, 'creature');
+
+		if (isset($_GET['start'])) {
+			$pager_start = $_GET['start'];
+		} else {
+			$pager_start = 0;
+		}
+
+		$creatures = getAssetsFromQuery('random', $pager_start, 4, 'creature');
 
 		// Prevent browser caching for random entries
 		header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
