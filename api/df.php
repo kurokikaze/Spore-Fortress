@@ -200,9 +200,9 @@ class DF_Creature {
 				if ($power > 0) {
 					$attack_number = $numbering[$i];
 
-					$attack_record = "\t" . '[ATTACK:' . $attack_number . ':BYTYPE:' . $attack_type . ':' . $attack_text . ':1:' . $power . ':BLUDGEON]';
+					$attack_record = '[ATTACK:' . $attack_number . ':BYTYPE:' . $attack_type . ':' . $attack_text . ':1:' . $power . ':BLUDGEON]';
 
-					$battle_stack .= $attack_record . "\n";
+					$battle_stack .= "\t" . $attack_record . "\n";
 
 					$i++;
 				}
