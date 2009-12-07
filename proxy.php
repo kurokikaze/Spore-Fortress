@@ -32,7 +32,7 @@ switch ($_GET['action']) {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 
 		foreach ($creatures AS $creature) {
-/*			$image = getCreaturePreview($creature['id']);*/
+/*			$image = getCreaturePreview($creature['id']); */
 			$strings[] = ' "' . $creature['id'] . '" : { "name" : "' . $creature['name'] . '", "id" : "' . $creature['id'] . '", "thumb" : "' . $creature['thumb'] . '" } ';
 		}
 		break;

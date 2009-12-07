@@ -154,7 +154,7 @@
 			if (is_array($attacks) && !empty($attacks)) {
 				// rsort($attacks, true);
 				if (count($attacks) > 2) {
-					array_slice($attacks, 0, 2, true); // Only first attacks
+					$attacks = array_slice($attacks, 0, 2, true); // Only first attacks
 				}
 
 				$numbering = array(
