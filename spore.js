@@ -1,5 +1,5 @@
 // Namespace
-spore_fort = {};
+var spore_fort = {};
 
 spore_fort.show_creature = function (creature) {
 	creature_slot = $('<div class="creature" />').html('<h1>' + creature.name + '</h1>');
@@ -27,7 +27,6 @@ spore_fort.get_random_creatures = function (query) {
 		window.creature_start = window.creature_start + 4;
 	}
 
-	window.alert('Starting pager from ' + window.creature_start);
 	$.getJSON("proxy.php?action=random&query=" + query + "&start=" + window.creature_start, function(data) {
 
 		$.each(data, function(i, creature){
@@ -87,7 +86,6 @@ spore_fort.add_to_transmuter = function (creature, target) {
 $(document).ready(function() {
 
 	$("#find_user").bind('click', function() {
-		alert('User search bind fired');
 		spore_fort.load_user_creatures($('#searchfield').val());
 	});
 
